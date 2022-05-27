@@ -5,15 +5,15 @@ import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
-
   final List<Transaction> transactions;
 
   TransactionList(this.transactions);
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: transactions.map((tx) {
+      height: 190,
+      child: ListView.builder(
+        itemBuilder: (context, index) {
           return Card(
             child: Row(children: [
               Container(
@@ -23,7 +23,7 @@ class TransactionList extends StatelessWidget {
                   border: Border.all(color: Colors.purple, width: 2),
                 ),
                 child: Text(
-                  tx.amount.toString(),
+                  '\$${transactions[index].amount.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -35,21 +35,22 @@ class TransactionList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tx.title,
+                    transactions[index].title,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    DateFormat.yMMMd().format(tx.date),
+                    DateFormat.yMMMd().format(transactions[index].date),
                     style: TextStyle(color: Colors.grey),
                   ),
                 ],
               )
             ]),
           );
-        }).toList(),
+        },
+        itemCount: transactions.length,
       ),
     );
   }
